@@ -24,12 +24,12 @@ for (let i = 0; i < ellipse_list.length; i++) {
 let costaanDetails = {
     1: {
         name: 'Satyansh Rai',
-        dep: 'President, SU',
+        dep: 'President, Student Union',
         image: './costaans/pres.png'
     },
     2: {
         name: 'Aakash Singh',
-        dep: 'General Secretary, SU',
+        dep: 'General Secretary, Student Union',
         image: './costaans/gensec.png'
     },
     3: {
@@ -105,6 +105,8 @@ function printLetters(prop, index, nameToPrint)
 
                 if(prop == 'name' && i == ar.length-1) 
                     printLetters('dep', index, departmentName);
+                if(prop == 'dep' && i == ar.length -1)
+                    window.addEventListener("keyup", change);
             }, 80 * i);             
         })(i);
     }
@@ -147,18 +149,18 @@ function displayDetails(index) {
     firstTimeCalled = 0;
     isDisplayRunning = false;
 }
-document.addEventListener("keydown", change);
+window.addEventListener("keyup", change);
 
 function change(e) {
 
     let img = document.getElementsByClassName("photo-2")[0]
     let code = e.keyCode; 
-    // console.log(e);
+    console.log(e);
     let imgURL;
 
     if (firstTimeCalled && code >= 49 && code <= 57) 
     {
-        // document.removeEventListener("keydown", change);
+        window.removeEventListener("keyup", change);
         if (!isDisplayRunning)
             displayDetails(code - 48);   
         // document.getElementsByClassName('photo-1')[0].style.animation = "rotate 2s ease-in-out forwards"
@@ -172,15 +174,17 @@ function change(e) {
         setTimeout(() => {
             img.style.opacity = "1";
             img.style.animation = "";
-            document.addEventListener("keydown", change);
             // document.getElementsByClassName('photo-1')[0].style.animation = "rotate 12s linear infinite forwards";
         }, 2000);
+        setTimeout(() => {
+            // window.addEventListener("keyup", change);            
+        }, 3000);
     }
 
     else if (code >= 49 && code <= 57) {
         // document.getElementsByClassName('photo-1')[0].style.animation = "rotate 1s ease-in-out forwards"
-        document.removeEventListener("keydown", change);
-
+        window.removeEventListener("keyup", change);
+        console.log('removed');
         removeLetters(costaanName);
         removeLetters(departmentName);
 
@@ -199,8 +203,11 @@ function change(e) {
             img.classList.add("adder");
             img.style.backgroundPosition = "center";
             img.style.backgroundRepeat = "no-repeat";
-            document.addEventListener("keydown", change);
+            // window.addEventListener("keyup", change);
             img.classList.remove("remove");
         },600);
+        setTimeout(() => {
+            // window.addEventListener("keyup", change);            
+        }, 3000);
     } 
 }
